@@ -15,5 +15,10 @@
   "bugs": {
     "url": "https://github.com/Kaavian-Systems-Pvt-Ltd/authentication/issues"
   },
-  "homepage": "https://github.com/Kaavian-Systems-Pvt-Ltd/authentication#readme"
+  "homepage": "https://github.com/Kaavian-Systems-Pvt-Ltd/authentication#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "jsonwebtoken": "^8.5.1",
+    "nodemon": "^2.0.20"
+  }
 }
