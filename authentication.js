@@ -14,8 +14,7 @@ const generateToken = (userName,password) => {
 
 const checkingToken = (token) => {
     console.log(token,33);
-    if(token){
-       jwt.verify(token,`${process.env.ACCESS_TOKEN_SECRET}`,(err, verifiedJwt) => {
+         jwt.verify(token,`${process.env.ACCESS_TOKEN_SECRET}`,(err, verifiedJwt) => {
         if(err){
             return(err.message);
         }else {
@@ -23,8 +22,6 @@ const checkingToken = (token) => {
             return ({status: 'success', data});
         }
        });
-    }
-    return({status: 'failuer', message:'token is unavailable'});
 }
 
 module.exports = {
