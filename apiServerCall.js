@@ -1,9 +1,10 @@
 const { generateToken } = require('./authentication');
 
 const loginApi = (req, res) => {
+
     const userName = 'mani'
     const result = generateToken(userName);
-    console.log(result);
+    console.log( result );
 };
 
 module.exports = {
