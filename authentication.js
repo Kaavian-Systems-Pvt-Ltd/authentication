@@ -28,4 +28,5 @@ const checkingToken = (token) => {
 
 module.exports = {
     generateToken,
+    checkingToken,
 }
