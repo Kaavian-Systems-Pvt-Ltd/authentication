@@ -13,6 +13,7 @@ const generateToken = (userName,password) => {
 }
 
 const checkingToken = (token) => {
+    console.log(token,33);
     if(token){
        jwt.verify(token,`${process.env.ACCESS_TOKEN_SECRET}`,(err, verifiedJwt) => {
         if(err){
