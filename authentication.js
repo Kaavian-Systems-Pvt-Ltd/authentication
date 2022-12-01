@@ -14,7 +14,7 @@ const generateToken = (userName) => {
 
 const checkingToken = (propertys) => {
     const ignorePaths = propertys.ignorePath[0];
-    const token = propertys.token;
+    const receivedToken = propertys.token;
     console.log(token);
     const req = propertys.req ;
     const res = propertys.res;
@@ -24,8 +24,8 @@ const checkingToken = (propertys) => {
         return ({status: 'success', data: 'loginApiRequest'});
     }
     try{
-    if(token){
-    const token = jwt.verify(token,`${process.env.ACCESS_TOKEN_SECRET}`);
+    if(receivedToken){
+    const token = jwt.verify(receivedToken,`${process.env.ACCESS_TOKEN_SECRET}`);
     console.log(data);
     return ({status: 'success', data:token});
     }
