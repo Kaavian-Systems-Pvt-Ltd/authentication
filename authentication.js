@@ -18,7 +18,8 @@ const checkingToken = (propertys) => {
     const req = propertys.req ;
     const res = propertys.res;
     const url = req.url;
-    console.log(url);
+    console.log(url, 69);
+    console.log(ignorePaths, 00);
     if(url === ignorePaths && receivedToken === ''){
         return ({status: 'success', data: 'loginApiRequest'});
     }
