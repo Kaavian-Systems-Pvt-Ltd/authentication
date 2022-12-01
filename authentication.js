@@ -13,21 +13,21 @@ const generateToken = (userName) => {
 }
 
 const checkingToken = (propertys) => {
-    const ignorePaths = propertys.ignorePaths[0];
+    const ignorePaths = propertys.ignorePath[0];
     const token = propertys.token;
     console.log(token);
     const req = propertys.req ;
     const res = propertys.res;
     const url = req.url;
-    if(url === ignorePaths){
-        const message = 'loginApi';
-        return(message);
+    console.log(url);
+    if(url === ignorePaths && token === ''){
+        return ({status: 'success', data: 'loginApiRequest'});
     }
     try{
     if(token){
-    const data = jwt.verify(token,`${process.env.ACCESS_TOKEN_SECRET}`);
+    const token = jwt.verify(token,`${process.env.ACCESS_TOKEN_SECRET}`);
     console.log(data);
-    return {status: 'success', token:data};
+    return ({status: 'success', data:token});
     }
 }catch{
     return ({status:"invalidToken"});
