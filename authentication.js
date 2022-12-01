@@ -26,7 +26,7 @@ const checkingToken = (propertys) => {
     try{
     if(receivedToken){
     const token = jwt.verify(receivedToken,`${process.env.ACCESS_TOKEN_SECRET}`);
-    console.log(data);
+    console.log(token);
     return ({status: 'success', data:token});
     }
 }catch{
