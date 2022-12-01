@@ -15,7 +15,6 @@ const generateToken = (userName) => {
 const checkingToken = (propertys) => {
     const ignorePaths = propertys.ignorePath[0];
     const receivedToken = propertys.token;
-    console.log(token);
     const req = propertys.req ;
     const res = propertys.res;
     const url = req.url;
