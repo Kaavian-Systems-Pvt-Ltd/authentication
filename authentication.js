@@ -1,14 +1,14 @@
 const jwt = require('jsonwebtoken');
 
-const generateToken = (userName,password) => {
-    const name = userName;
-    const pass = password;
-    if(pass === password){
-    const token =  jwt.sign({name}, `${process.env.ACCESS_TOKEN_SECRET}`);
+const generateToken = (userName) => {
+    // const name = userName;
+    // const pass = password;
+    if(userName){
+    const token =  jwt.sign({userName}, `${process.env.ACCESS_TOKEN_SECRET}`);
     console.log( token);
-    return token;
+    return ({status: 'Success', data: token});
     }else {
-        return({status: 'failuer', data: 'invalied password'});
+        return({status: 'Failure', data: 'Invalid password'});
     }
 }
 
