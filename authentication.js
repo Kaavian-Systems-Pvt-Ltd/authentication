@@ -3,13 +3,15 @@ const jwt = require('jsonwebtoken');
 
 /**
  * 
- * @param {String} userData generates token for the user specified field 
+ *  @param {{data: {name,id}}} userData generates token for the user specified field 
  * @returns status and generated token
+ * this function use for generatetoken
  */
 
 const generateToken = (userData) => {
-    if(userData){
-    const token =  jwt.sign({userData}, `${process.env.ACCESS_TOKEN_SECRET}`);
+  const data = userData.data;
+    if(data){
+    const token =  jwt.sign(data, `${process.env.ACCESS_TOKEN_SECRET}`);
     return ({status: 'Success', data: token});
     }else {
         return({status: 'Failure', data: 'Invalid password'});
@@ -37,18 +39,17 @@ const checkingToken = (propertys) => {
 	try{
 		if(receivedToken && receivedToken !== ''){
 			const token = jwt.verify(receivedToken,`${process.env.ACCESS_TOKEN_SECRET}`);
-			console.log(token);
 			 next();
 			return ({status: 'success', data:token});
 		} else {
-			return ({status: 'Empty...'});
+			return ({status: 'recived token is empty...'});
 		}
 	} catch{
-		return ({status: 'invalid token'});
+		return ({status: 'rescived token is invalid token'});
 	}
 }
 
 module.exports = {
     generateToken,
     checkingToken,
-}
+};
