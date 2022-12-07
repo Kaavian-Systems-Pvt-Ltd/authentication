@@ -1,55 +1,53 @@
-const jwt = require('jsonwebtoken');
-
+/* eslint-disable no-console */
+/* eslint-disable no-unused-vars */
+const jwt = require ('jsonwebtoken');
 
 /**
- * 
- *  @param {{data: {name,id}}} userData generates token for the user specified field 
+ *
+ * @param {{data: {name,id}}} userData generates token for the user specified field
  * @returns status and generated token
  * this function use for generatetoken
  */
 
-const generateToken = (userData) => {
+const generateToken = (userData)=> {
   const data = userData.data;
-    if(data){
-    const token =  jwt.sign(data, `${process.env.ACCESS_TOKEN_SECRET}`);
-    return ({status: 'Success', data: token});
-    }else {
-        return({status: 'Failure', data: 'Invalid password'});
+  try {
+    if (data) {
+      const token = jwt.sign (data , `${process.env.ACCESS_TOKEN_SECRET}`);
+      return token;
     }
-}
+  } catch (error) {
+    throw new Error ('can not generate token');
+  }
+};
 
 /**
- * 
- * @param { {ignorePath: [ignorePaths], token: token, req: req, res: res, next: next} } propertys validate the api's
+ *
+ * @param { {ignorePath: ['ignorePaths'], token: 'token', req: req, res: res, next: next} } propertys validate the api's
  * @returns status
  */
 
-const checkingToken = (propertys) => {
-	const ignorePaths = propertys.ignorePath;
-	const receivedToken = propertys.token;
-	const req = propertys.req ;
-	const res = propertys.res;
-	const next = propertys.next;
-	const url = req.url;
-	ignorePaths.map( (val) => {
-		if(url === val && (receivedToken === undefined || receivedToken === null)){
-			next();
-		}
-	})
-	try{
-		if(receivedToken && receivedToken !== ''){
-			const token = jwt.verify(receivedToken,`${process.env.ACCESS_TOKEN_SECRET}`);
-			 next();
-			return ({status: 'success', data:token});
-		} else {
-			return ({status: 'recived token is empty...'});
-		}
-	} catch{
-		return ({status: 'rescived token is invalid token'});
-	}
-}
+const verifyToken = ({ ignorePath , token , req , res , next })=> {
+  const url = req.url;
+  ignorePath.map ((val)=> {
+    if (url === val && (token === undefined || token === null)) {
+      return next ();
+    }
+  });
+  try {
+    if (token) {
+      const data = jwt.verify (token , `${process.env.ACCESS_TOKEN_SECRET}`);
+      next ();
+      return data;
+    } else {
+      return { 'status' : 'received token is empty...' };
+    }
+  } catch (error) {
+    throw new Error ('received token is invalid token' , console.error (error));
+  }
+};
 
 module.exports = {
-    generateToken,
-    checkingToken,
+  generateToken ,
+  verifyToken
 };
