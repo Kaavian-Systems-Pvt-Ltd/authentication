@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 const jwt = require ('jsonwebtoken');
 
@@ -12,10 +11,8 @@ const jwt = require ('jsonwebtoken');
 const generateToken = (userData)=> {
   const data = userData.data;
   try {
-    if (data) {
       const token = jwt.sign (data , `${process.env.ACCESS_TOKEN_SECRET}`);
       return token;
-    }
   } catch (error) {
     throw new Error ('can not generate token');
   }
@@ -29,21 +26,22 @@ const generateToken = (userData)=> {
 
 const verifyToken = ({ ignorePath , token , req , res , next })=> {
   const url = req.url;
-  ignorePath.map ((val)=> {
-    if (url === val && (token === undefined || token === null)) {
-      return next ();
-    }
-  });
+ 
   try {
+    const validateIgnorePath = ignorePath.includes (url);
+    if(validateIgnorePath === true){
+       next ();
+       return 'given ignore path is ignored';
+    }
     if (token) {
-      const data = jwt.verify (token , `${process.env.ACCESS_TOKEN_SECRET}`);
+      const data = jwt.verify (token , `${process.env.ACCESS_TOKEN_SECRET}`); 
       next ();
       return data;
     } else {
       return { 'status' : 'received token is empty...' };
     }
   } catch (error) {
-    throw new Error ('received token is invalid token' , console.error (error));
+    throw new Error ('received token is invalid token');
   }
 };
 
